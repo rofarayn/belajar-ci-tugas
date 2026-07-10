@@ -11,7 +11,6 @@ if (session()->getFlashData('success')) {
 }
 ?> 
 <?= form_open('keranjang/edit') ?>
-<!-- Table with stripped rows -->
 <table class="table datatable">
     <thead>
         <tr>
@@ -32,7 +31,23 @@ if (session()->getFlashData('success')) {
                 <tr>
                     <td><?= $item['name'] ?></td>
                     <td><img src="<?= base_url() . "img/" . $item['options']['foto'] ?>" width="100px"></td>
-                    <td><?= number_to_currency($item['price'], 'IDR') ?></td>
+                    
+                    <td>
+                        <?php if (isset($diskon) && $diskon > 0): ?>
+                            <?php $hargaAsli = $item['price'] + $diskon; ?>
+                            <span class="text-danger" style="text-decoration: line-through; font-size: 12px;">
+                                <?= number_to_currency($hargaAsli, 'IDR') ?>
+                            </span><br>
+                            <span class="text-primary fw-bold">
+                                <?= number_to_currency($item['price'], 'IDR') ?>
+                            </span>
+                        <?php else: ?>
+                            <span class="text-primary fw-bold">
+                                <?= number_to_currency($item['price'], 'IDR') ?>
+                            </span>
+                        <?php endif; ?>
+                    </td>
+                    
                     <td><input type="number" min="1" name="qty<?= $i++ ?>" class="form-control" value="<?= $item['qty'] ?>"></td>
                     <td><?= number_to_currency($item['subtotal'], 'IDR') ?></td>
                     <td>

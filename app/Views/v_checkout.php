@@ -64,7 +64,23 @@
             ?>
                     <tr>
                         <td><?= $item['name'] ?></td>
-                        <td><?= number_to_currency($item['price'], 'IDR') ?></td>
+                        
+                        <td>
+                            <?php if (isset($diskon) && $diskon > 0): ?>
+                                <?php $hargaAsli = $item['price'] + $diskon; ?>
+                                <span class="text-danger" style="text-decoration: line-through; font-size: 12px;">
+                                    <?= number_to_currency($hargaAsli, 'IDR') ?>
+                                </span><br>
+                                <span class="text-primary fw-bold">
+                                    <?= number_to_currency($item['price'], 'IDR') ?>
+                                </span>
+                            <?php else: ?>
+                                <span class="text-primary fw-bold">
+                                    <?= number_to_currency($item['price'], 'IDR') ?>
+                                </span>
+                            <?php endif; ?>
+                        </td>
+
                         <td><?= $item['qty'] ?></td>
                         <td><?= number_to_currency($item['price'] * $item['qty'], 'IDR') ?></td>
                     </tr>
@@ -82,6 +98,7 @@
                 <td>Total</td>
                 <td><span id="total"><?= number_to_currency($total, 'IDR') ?></span></td>
             </tr>
+            
         </tbody>
         </table>
     </div>
@@ -102,9 +119,9 @@ $(document).ready(function() {
         $("#total_harga").val(total);
     }
 
-	$('#kelurahan').select2({
-	    placeholder: 'Cari daerah tujuan',
-	    minimumInputLength: 3, 
+    $('#kelurahan').select2({
+        placeholder: 'Cari daerah tujuan',
+        minimumInputLength: 3, 
         ajax: {
             url: '<?= site_url('ajax/destinations') ?>',
             dataType: 'json',
@@ -119,7 +136,7 @@ $(document).ready(function() {
             },
             cache: true
         }
-	});
+    });
     $("#kelurahan").on('change', function () {
         let id_kelurahan = $(this).val();
 

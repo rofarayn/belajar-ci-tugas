@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ProductModel;
-use App\Models\DiscountModel; // Memanggil DiscountModel
+use App\Models\DiscountModel;
 
 class Home extends BaseController
 {
@@ -13,7 +13,7 @@ class Home extends BaseController
     function __construct(){
         helper(['number', 'form']);
         $this->productModel = new ProductModel();
-        $this->discountModel = new DiscountModel(); // Inisialisasi Model Diskon
+        $this->discountModel = new DiscountModel(); 
     }
 
     public function index()

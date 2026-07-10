@@ -3,7 +3,6 @@
 History Transaksi Pembelian <strong><?= $username ?></strong>
 <hr>
 <div class="table-responsive">
-    <!-- Table with stripped rows -->
     <table class="table datatable">
         <thead>
             <tr>
@@ -44,12 +43,10 @@ History Transaksi Pembelian <strong><?= $username ?></strong>
             ?>
         </tbody>
     </table>
-    <!-- End Table with stripped rows -->
-</div>
+    </div>
 
 <?php if (!empty($transactions)) : ?>
     <?php foreach ($transactions as $item) : ?>
-        <!-- Detail Modal Begin -->
         <div class="modal fade" id="detailModal-<?= $item['id'] ?>" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -73,7 +70,25 @@ History Transaksi Pembelian <strong><?= $username ?></strong>
                                 <?php endif; ?>
 
                                 <strong><?= $item2['nama'] ?></strong>
-                                <?= number_to_currency($item2['harga'], 'IDR') ?>
+                                
+                                <?php 
+                                    // Menghitung harga satuan riil saat transaksi terjadi
+                                    $hargaSatuan = $item2['subtotal_harga'] / $item2['jumlah']; 
+                                ?>
+                                
+                                <?php if (isset($item2['diskon']) && $item2['diskon'] > 0): ?>
+                                    <?php $hargaAsli = $hargaSatuan + $item2['diskon']; ?>
+                                    <span class="text-danger" style="text-decoration: line-through; font-size: 12px;">
+                                        (<?= number_to_currency($hargaAsli, 'IDR') ?>)
+                                    </span>
+                                    <span class="text-primary fw-bold ms-1">
+                                        <?= number_to_currency($hargaSatuan, 'IDR') ?>
+                                    </span>
+                                <?php else: ?>
+                                    <span class="text-primary fw-bold">
+                                        <?= number_to_currency($hargaSatuan, 'IDR') ?>
+                                    </span>
+                                <?php endif; ?>
                                 <br>
                                 <?= "(" . $item2['jumlah'] . " pcs)" ?><br>
                                 <?= number_to_currency($item2['subtotal_harga'], 'IDR') ?>
@@ -85,7 +100,6 @@ History Transaksi Pembelian <strong><?= $username ?></strong>
                 </div>
             </div>
         </div>
-        <!-- Detail Modal End -->
-    <?php endforeach; ?>
+        <?php endforeach; ?>
 <?php endif; ?>
 <?= $this->endSection() ?>

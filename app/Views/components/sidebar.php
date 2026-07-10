@@ -4,11 +4,11 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link <?php echo (uri_string() == 'Home') ? "" : "collapsed" ?>" href="Home">
-                <i class="bi bi-grid"></i>
-                <span>Home</span>
-            </a>
-        </li><!-- End Home Nav -->
+        <a class="nav-link <?= (uri_string() == '') ? "" : "collapsed" ?>" href="<?= base_url() ?>">
+            <i class="bi bi-grid"></i>
+            <span>Home</span>
+        </a>
+    </li>
 
         <li class="nav-item">
             <a class="nav-link <?php echo (uri_string() == 'keranjang') ? "" : "collapsed" ?>" href="keranjang">
@@ -25,7 +25,23 @@
                 <i class="bi bi-receipt"></i>
                 <span>Produk</span>
             </a>
-        </li><!-- End Produk Nav --> <!-- munculkan menu produk -->    
+        </li><!-- End Produk Nav --> <!-- munculkan menu produk --> 
+        
+        <li class="nav-item">
+            <a class="nav-link <?= (uri_string() == 'diskon') ? "" : "collapsed" ?>" href="<?= base_url('diskon') ?>">
+                <i class="bi bi-tags"></i>
+                <span>Diskon</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link <?= (uri_string() == 'pembelian') ? "" : "collapsed" ?>" href="<?= base_url('pembelian') ?>">
+                <i class="bi bi-cart-check"></i>
+                <span>Pembelian</span>
+            </a>
+        </li>
+
+        
         <?php
         }
         ?>

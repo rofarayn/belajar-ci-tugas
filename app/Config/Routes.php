@@ -27,6 +27,18 @@ $routes->group('keranjang', ['filter' => 'auth'], function ($routes) {
     $routes->get('clear', 'TransaksiController::cart_clear');
 });
 
+$routes->group('diskon', ['filter' => 'auth'], function ($routes) { 
+    $routes->get('', 'DiskonController::index');
+    $routes->post('', 'DiskonController::create'); // Untuk simpan data baru
+    $routes->post('edit/(:any)', 'DiskonController::edit/$1'); // Untuk simpan editan
+    $routes->get('delete/(:any)', 'DiskonController::delete/$1'); // Untuk hapus
+});
+
+$routes->group('pembelian', ['filter' => 'auth'], function ($routes) { 
+    $routes->get('', 'PembelianController::index');
+    $routes->get('status/(:any)', 'PembelianController::ubah_status/$1');
+});
+
 $routes->get('/keranjang', 'TransaksiController::index', ['filter' => 'auth']);
 
 $routes->get('checkout', 'TransaksiController::checkout', ['filter' => 'auth']);
@@ -39,3 +51,5 @@ $routes->get('ajax/costs','TransaksiController::costs', ['filter' => 'auth']);
 $routes->resource('api/products', ['controller' => 'Api\ProdukController']);
 
 $routes->get('api/transactions', 'Api\TransaksiController::index');
+
+$routes->resource('api/discounts', ['controller' => 'Api\DiscountController']);

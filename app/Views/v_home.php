@@ -12,20 +12,22 @@ if (session()->getFlashData('success')) {
 ?>
 <div class="row">
     <?php foreach ($products as $key => $item) : ?>
+        
         <?php 
-            // LOGIKA DISKON: Tentukan harga akhir yang akan masuk ke keranjang
+            // 1. BAGIAN TAMBAHAN: Menghitung harga setelah diskon
             $hargaAkhir = $item['harga'];
             if (isset($diskon) && $diskon > 0) {
                 $hargaAkhir = $item['harga'] - $diskon;
             }
         ?>
+
         <div class="col-lg-6">
             <?= form_open('keranjang') ?>
             
             <?= form_hidden([
-                'id'    => $item['id'],
+                'id'    => (string) $item['id'],
                 'nama'  => $item['nama'],
-                'harga' => $hargaAkhir, 
+                'harga' => (string) $hargaAkhir,
                 'foto'  => $item['foto']
             ]) ?>
 
@@ -40,17 +42,17 @@ if (session()->getFlashData('success')) {
                             <span class="text-danger" style="text-decoration: line-through; font-size: 14px;">
                                 <?= number_to_currency($item['harga'], 'IDR') ?>
                             </span>
-                            <span class="text-primary fw-bold ms-2">
+                            <span class="text-primary fw-bold ms-2" style="color: #012970;">
                                 <?= number_to_currency($hargaAkhir, 'IDR') ?>
                             </span>
                         <?php else: ?>
-                            <span class="text-primary fw-bold">
+                            <span class="text-primary fw-bold" style="color: #012970;">
                                 <?= number_to_currency($item['harga'], 'IDR') ?>
                             </span>
                         <?php endif; ?>
                     </h5>
                     
-                    <button type="submit" class="btn btn-info rounded-pill">Beli</button>
+                    <button type="submit" class="btn btn-info rounded-pill" style="color: white;">Beli</button>
                 </div>
             </div>
 
