@@ -16,6 +16,13 @@
       </form>
     </div><!-- End Search Bar -->
 
+    </div><?php if (isset($diskon) && $diskon > 0): ?>
+      <div class="d-none d-md-block ms-4 mt-2">
+         <span class="badge bg-success rounded-pill px-3 py-2" style="font-size: 14px;">
+           Hari ini ada diskon IDR <?= number_format($diskon, 0, ',', '.'); ?> per item
+         </span>
+      </div>
+    <?php endif; ?>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
